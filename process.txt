@@ -1,0 +1,22 @@
+npm install --save-dev nodemon
+this is for electron this is watching the electron app
+then add this file in package.json
+"scripts": {
+    "electron": "nodemon --exec electron ."
+  },
+
+npm install --save electron-window-state
+after install follow this website : https://www.npmjs.com/package/electron-window-state
+this is for state management in electron like in which portion the app was last
+
+npm install electron-is-dev
+after installation follow this website : https://www.npmjs.com/package/electron-is-dev
+for check app is in dev mode or user mode
+
+we need preload script to secure our backend
+
+
+create package 
+npm install --save-dev @electron-forge/cli
+npx electron-forge import
+then follow documentation : https://www.electronjs.org/docs/latest/tutorial/quick-start

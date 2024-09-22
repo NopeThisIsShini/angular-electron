@@ -1,0 +1,8 @@
+.backdrop-blur-xl {
+    -webkit-app-region: drag; /* Makes this area draggable */
+}
+
+#minimize, #maximize, #close {
+    -webkit-app-region: no-drag; /* Makes these buttons non-draggable */
+    cursor: pointer;
+}

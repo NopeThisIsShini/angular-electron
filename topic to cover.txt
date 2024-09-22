@@ -1,0 +1,3 @@
+contextBridge 1:19
+IPC channel 1:25 , communication between angular and electron
+menu bar 2:31

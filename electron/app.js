@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const url = require("url");
 const path = require("path");
 const windowStateKeeper = require('electron-window-state');
@@ -13,11 +13,20 @@ function createWindow() {
     defaultHeight: 800
   });
   mainWindow = new BrowserWindow({
+    frame: false,
     // width: 800,
     // height: 600,
     // we can define axis where window open on screen
     // x: 0,
     // y: 0, 
+
+    //set min-height and min-width
+    minWidth: 500,
+    minHeight: 400,
+    // for app icon 
+    icon: path.join(app.getAppPath(), "src","assets", "icon6.png"),
+    // transparent:true,
+
     // no defining the axix and height width manually we control it from electron-state-keeper
     x: mainWindowState.x,
     y: mainWindowState.y,
@@ -54,6 +63,16 @@ function createWindow() {
   // Open the DevTools.
     mainWindow.webContents.openDevTools()
 
+    // In your existing createWindow function
+mainWindow.on('maximize', () => {
+  mainWindow.webContents.send('window-maximized');
+});
+
+mainWindow.on('unmaximize', () => {
+  mainWindow.webContents.send('window-unmaximized');
+});
+
+
 
 
   // Let us register listeners on the window, so we can update the state
@@ -86,6 +105,23 @@ app.on('window-all-closed', () => {
 // for mac it tells that when app is activated call the createWindow function
 app.on('activate', function () {
   if (mainWindow === null) createWindow()
+})
+
+// custom close triggerd
+ipcMain.handle('close-app', () => {
+  app.quit()
+})
+// window minimize triggerd
+ipcMain.handle('minimize', () => {
+  mainWindow.minimize()
+})
+// window maximize triggerd
+ipcMain.handle('maximize', () => {
+  if (mainWindow.isMaximized()) {
+    mainWindow.unmaximize()
+  } else {
+    mainWindow.maximize()
+  }
 })
 
 
