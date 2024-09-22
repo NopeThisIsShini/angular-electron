@@ -26,8 +26,12 @@ function createWindow() {
     // custom title 
     title: "This is Custom state with nodemon and eectron with state keeper",
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      // we can't use this two line as this is not secure, like if i open a google website in app load it would easily run a node js code and access my backend 
+      // if we active this two dependancy any one can easily access our backend and system
+      // nodeIntegration: true,
+      // contextIsolation: false,
+      // instead of using this we use  preload 
+      preload: path.join(__dirname, "preload.js")
     }
     // webPreferences: {
     //   nodeIntegration: true,
@@ -48,7 +52,9 @@ function createWindow() {
     })
   );
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
+
+
 
   // Let us register listeners on the window, so we can update the state
   // automatically (the listeners will be removed when the window is closed)
