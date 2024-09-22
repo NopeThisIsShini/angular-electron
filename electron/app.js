@@ -24,8 +24,11 @@ function createWindow() {
     width: mainWindowState.width,
     height: mainWindowState.height,
     // custom title 
-    title: "This is Custom satae with nodemon and eectron with state keeper",
-
+    title: "This is Custom state with nodemon and eectron with state keeper",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    }
     // webPreferences: {
     //   nodeIntegration: true,
     //   contextIsolation: false,
@@ -34,10 +37,6 @@ function createWindow() {
     // },
     // autoHideMenuBar: true // This hides the menu bar by default
   })
-  // Let us register listeners on the window, so we can update the state
-  // automatically (the listeners will be removed when the window is closed)
-  // and restore the maximized or full screen state
-  mainWindowState.manage(mainWindow);
 
 
   //load the dist url which is output 
@@ -50,9 +49,16 @@ function createWindow() {
   );
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
+
+  // Let us register listeners on the window, so we can update the state
+  // automatically (the listeners will be removed when the window is closed)
+  // and restore the maximized or full screen 
+  // remember this should give in end of the createWindow function
+  mainWindowState.manage(mainWindow);
+
   mainWindow.on('closed', function () {
-    mainWindow = null
-  })
+    mainWindow = null;
+  });
 }
 // this says when app ready call the createWindow function 
 // app.on('ready', createWindow)
